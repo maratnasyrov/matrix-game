@@ -1,0 +1,32 @@
+{
+  "name": "game-example",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/game-example.umd.cjs",
+  "module": "./dist/game-example.js",
+  "exports": {
+    ".": {
+      "import": "./dist/game-example.js",
+      "require": "./dist/game-example.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "pnpm build && vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "@releaseband/ui-pub-sub": "^0.4.0",
+    "xstate": "^5.18.2"
+  }
+}
