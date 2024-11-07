@@ -12,9 +12,6 @@ export default defineConfig({
         game: path.resolve(__dirname, 'src/index.ts'),
       },
     },
-    rollupOptions: {
-      external: ['react', 'react-dom'],
-    },
     outDir: 'dist',
     emptyOutDir: true,
     assetsDir: 'assets',

@@ -3,6 +3,8 @@ import { gameMachine } from './gameMachine';
 import { CanvasMatrixManager } from './canvas-matrix';
 import { api } from './api';
 
+const CANVAS_CONTAINER_ID = '#game-canvas-container';
+
 export const slot = () => {
   let subscribesDone = false;
   let canvasManager: CanvasMatrixManager | undefined;
@@ -13,15 +15,19 @@ export const slot = () => {
     if (state.matches('init')) {
       if (subscribesDone) return;
 
-      api.sub.onInitResponse((ctx) => {
-        canvasManager = new CanvasMatrixManager('#game-canvas');
-        if (ctx) {
-          stateMachine.send({ type: 'INIT_RESPONSE_COMPLETE', data: ctx });
-        }
-        stateMachine.send({ type: 'INITIALIZE' });
-      });
+      subscribesDone = true;
+
+      api.sub.onSlotUIReady(api.pub.game.ready);
+
+      // api.sub.onInitResponse((ctx) => {
+      //   canvasManager = new CanvasMatrixManager(CANVAS_CONTAINER_ID);
+      //   if (ctx) {
+      //     stateMachine.send({ type: 'INIT_RESPONSE_COMPLETE', data: ctx });
+      //   }
+      //   stateMachine.send({ type: 'INITIALIZE' });
+      // });
       api.sub.onInitV2Response((ctx) => {
-        canvasManager = new CanvasMatrixManager('#game-canvas');
+        canvasManager = new CanvasMatrixManager(CANVAS_CONTAINER_ID);
         if (ctx) {
           stateMachine.send({ type: 'INIT_RESPONSE_V2_COMPLETE', data: ctx });
         }
@@ -53,13 +59,15 @@ export const slot = () => {
           stateMachine.send({ type: 'NEXT' });
         }
       });
-
-      subscribesDone = true;
     }
     if (state.matches('idle') || state.matches('idleBonus')) {
       canvasManager?.pauseAnimation();
     }
     if (state.matches('preview')) {
+      if (state.context.progress > 0) {
+        canvasManager?.matrixEffect();
+      }
+
       if (
         typeof state.value !== 'string' &&
         'preview' in state.value &&
@@ -67,9 +75,6 @@ export const slot = () => {
       ) {
         canvasManager?.pauseAnimation();
       }
-    }
-    if (state.matches('preview')) {
-      if (state.context.progress === 0) canvasManager?.matrixEffect();
     }
   });
 

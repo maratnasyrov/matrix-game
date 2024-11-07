@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@releaseband/ui-pub-sub':
-    specifier: ^0.4.0
-    version: 0.4.0
+    specifier: ^0.5.0
+    version: 0.5.0
   xstate:
     specifier: ^5.18.2
     version: 5.18.2
@@ -232,8 +232,8 @@ packages:
     dev: true
     optional: true
 
-  /@releaseband/ui-pub-sub@0.4.0:
-    resolution: {integrity: sha512-L9QD2EgwRoJBvuMX1msTkvN7UPVw2Ok31fUFwOmi0V7YQq1iN1agZHwkbu75QGxxsWsBBbfchRepaWK+Orcb0w==, tarball: https://npm.pkg.github.com/download/@releaseband/ui-pub-sub/0.4.0/9a1ed54df7a9caa4c40182bac04e1b89b360c434}
+  /@releaseband/ui-pub-sub@0.5.0:
+    resolution: {integrity: sha512-4iGDCyKassvA7TnXhlM0PE2cQbmtG8Jisz3SXHjW2ePm53STYlWHKgCWtfQs8DcVu+sC6zUqlalhyPSFqqd9Sw==, tarball: https://npm.pkg.github.com/download/@releaseband/ui-pub-sub/0.5.0/7c22425927338f664a5643a9cc25482a0b4fe120}
     engines: {node: '>=20.15.0', pnpm: '>=8.10.2'}
     dev: false
 

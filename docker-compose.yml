@@ -1,0 +1,36 @@
+services:
+  server:
+    build:
+      context: ../game-ssr
+      dockerfile: Dockerfile
+      target: development
+      args:
+        SERVER_PORT: 3000
+        VERSION: '0.0.1'
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+    ports:
+      - '${SERVER_PORT:-3000}:${SERVER_PORT:-3000}'
+    environment:
+      NODE_ENV: development
+      SERVER_PORT: ${SERVER_PORT:-3000}
+      VERSION: ${VERSION:-1.0.0}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    command: ['pnpm', 'dev']
+    restart: unless-stopped
+    networks:
+      - game-network
+    develop:
+      watch:
+        - action: sync
+          path: ../game-ssr/src
+          target: /app/src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ../game-ssr/package.json
+    env_file:
+      - .env.local
+
+networks:
+  game-network:
+    driver: bridge

@@ -13,6 +13,10 @@ export const initialize = (
   });
 };
 
+export const ready = () => {
+  gameProducer.emit('ready', '1.0.0', {});
+};
+
 export const nextRoundReady = () => {
   gameProducer.emit('next-round-ready', '1.0.0', {});
 };

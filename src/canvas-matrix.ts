@@ -10,9 +10,14 @@ export class CanvasMatrixManager {
   private readonly fontSize: number = 20;
   private readonly offsetX: number = 0;
 
-  constructor(canvasId: string) {
-    this.canvas = this.getCanvas(canvasId);
+  constructor(containerId: string) {
+    const canvasContainer = this.getCanvasContainer(containerId);
+
+    this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
+    this.canvas.id = 'matrix-canvas';
+    canvasContainer.append(this.canvas);
+
     if (!this.context) {
       throw new Error('Failed to get 2D context');
     }
@@ -24,12 +29,12 @@ export class CanvasMatrixManager {
     });
   }
 
-  private getCanvas = (canvasId: string): HTMLCanvasElement => {
-    const canvas = document.querySelector<HTMLCanvasElement>(canvasId);
-    if (!canvas) {
-      throw new Error('Canvas not found');
+  private getCanvasContainer = (containerId: string): HTMLDivElement => {
+    const canvasContainer = document.querySelector<HTMLDivElement>(containerId);
+    if (!canvasContainer) {
+      throw new Error(`Canvas container ${containerId} not found`);
     }
-    return canvas;
+    return canvasContainer;
   };
 
   private initializeDrops() {
